@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+	<!--  <template id="page_question_template" name="custom check" inherit_id="web.assets_backend">
+		
+	</template>-->
+	 <template id="page_question_template">
+		<t t-call="website.layout">
+	 	
+			<div id="wrap">
+				<div class="o_sub_menu container">
+				<form>
+					<h4>First Question</h4>
+					<input type="radio">Radio option 1</input>
+					<input type="radio">Radio option 2</input>
+					<input type="radio">Radio option 3</input>
+					 <!--   <ul>
+						<li>Radio option 1</li>
+						<li>Radio option 2</li>
+						<li>Radio option 3</li>
+					</ul>-->
+					<br/><br/>
+					<h4>Second Question</h4>
+					<input type="textarea"/>
+					<br/><br/>
+					<h4>Third Question</h4>
+					<input type="checkbox">check 1</input>
+					<input type="checkbox">check 2</input>
+					<input type="checkbox">check 3</input>
+				</form>
+				</div>
+				
+				 <div class="oe_structure" />
+			</div>
+			  
+		</t>
+	</template>
+	
+	<record id="page_question" model="website.page">
+	<field name="name">Questions</field>
+	<field name="website_published">True</field>
+	<field name="url">/questions</field>
+	<field name="view_id" ref="page_question_template"/>
+
+	</record>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	
+	<record id="test_form" model="ir.ui.view">
+	<field name="name">form</field>
+	<field name="model">demo.demo</field>
+	
+	<field name="arch" type="xml">
+		<form>
+			<div>
+				<action name="%(survey.action_survey_form)d" string="survey create" type="action"/>
+				<a name="%(survey.action_survey_form)d" type="action">survey</a>
+			</div>
+		</form>
+	</field>
+	</record>
+
+	<record id="test_action" model="ir.actions.act_window">
+	<field name="name">action</field>
+	<field name="res_model">demo.demo</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="test_form"/>
+	<!-- <field name="context">{'form_view_id':'survey.survey_form','tree_view_id':'survey.survey_tree'}</field> 
+	<field name="view_id" ref="survey.survey_page_form"/>-->
+	</record>
+	
+	<menuitem id="main" name="survey create" action="test_action" />
+</data>
+</odoo>

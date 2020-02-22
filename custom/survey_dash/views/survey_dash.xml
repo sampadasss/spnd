@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+<data>
+
+	<record id="action_survey_create" model="ir.actions.act_window">
+	<field name="name">action create survey</field>
+	<field name="res_model">survey.survey</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">form</field>
+	<field name="view_id" ref="survey.survey_form"/>
+	</record>
+	
+	<record id="survey_form_view" model="ir.ui.view">
+	<field name="name">view</field>
+	<field name="model">board.board</field>
+	<field name="view_type">form</field>
+	<field name="arch" type="xml">
+	<form>
+		<h2>Survey</h2>
+		<hpaned>
+			<child1>
+				<a name="%(survey_dash.action_survey_create)d" type="action">survey action</a><br/>
+			</child1>
+		</hpaned>		
+		
+		<!--  <div>
+			<h2>div tag</h2>
+			<a name="%(survey.action_survey_form)d" type="action">survey</a><br/>
+			<action name="%(survey.action_survey_form)d" type="action">survey1</action>
+			<action name="%(survey.action_survey_form)d" type="action" string="survey1"/>
+			<a name="%(survey.action_survey_form)d" type="action" string="survey"/>
+		</div>-->
+		
+	</form>
+	</field>
+	</record>
+
+	<record id="action_survey_dash" model="ir.actions.act_window">
+	<field name="name">survey action</field>
+	<field name="res_model">board.board</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">form</field>
+	<field name="usage">menu</field>
+	<field name="view_id" ref="survey_form_view"/>
+	</record>
+	
+	<menuitem id="main_menu" action="action_survey_dash"/>
+</data>
+</odoo>

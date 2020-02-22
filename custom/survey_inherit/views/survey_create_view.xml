@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	
+	<record model="ir.ui.view" id="survey_create_form" >
+	<field name="name">survey form</field>
+	<field name="model">survey.survey</field>
+	<field name="priority">1</field>
+	<field name="mode">primary</field>
+	<field name="view_type">form</field>
+	<field name="arch" type="xml">	
+		<form id="id_survey">		
+                    <field name="id" invisible="1"/>
+                    <field name="tot_start_survey" invisible="1"/>
+                    <field name="is_closed" invisible="1"/>
+                    <header groups="survey.group_survey_manager">
+                        <button name="action_test_survey" string="Test Survey" type="object" attrs="{'invisible': [('id', '=', False)]}"/>
+                        <button name="action_print_survey" string="Print Survey" type="object" attrs="{'invisible': [('id', '=', False)]}"/>
+                        <button name="action_send_survey" string="Share and invite by email" type="object" class="oe_highlight"  attrs="{'invisible': [('id', '=', False)]}"/>
+                        <button name="action_result_survey" string="View results" type="object" attrs="{'invisible': ['|',('id', '=', False), ('tot_start_survey', '!=', 0)]}"/>
+                        <button name="action_result_survey" string="View results" type="object" class="oe_highlight" attrs="{'invisible': [('tot_start_survey', '=', 0)]}"/>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1'}"/>
+                    </header>
+                    <sheet>
+             <div class="oe_button_box" name="button_box">
+                            <button name="action_survey_user_input"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                                <field string="Answers" name="tot_comp_survey" widget="statinfo"/>
+                            </button>
+                            <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive" attrs="{'invisible': [('is_closed', '=', False)]}">
+                                <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                            </button>
+                        </div>
+                        <div class="oe_title" style="width: 100%;">
+                            <label for="title" class="oe_edit_only"/>
+                            <h1><field name="title" placeholder="Survey Title"/></h1>
+                        </div>
+                  
+          
+                  	<group>
+                  		<field name="pages_ids" mode="tree" context="{'default_survey_id': active_id}" options="{'no_open':False}">
+                                    <tree editable="bottom"> 
+                                        <field name="title"/>
+                                        <field name="question_ids" class="question_ids_class" widget="many2many_tags" domain="[('page_id','=','id')]" options="{'no_open':True},'no_quick_create':True"/>                                   	
+                                    </tree>
+                       </field>
+                  	</group>
+              
+                  	<div>
+                  		<group>
+                  		<group>
+                  			<field class="question_class" name="question" />
+                  			<field class="select_question" name="type"/><!-- default=" "   -->
+                  			<field name="labels_ids" context="{'default_question_id': active_id}" attrs="{'invisible':[('type','not in',['simple_choice','multiple_choice','matrix'])]}">
+				   			<tree editable="bottom">
+				   				<control>
+				   					<create string="Enter Answer Choice"/>
+				   				</control>
+				   				<field name="sequence" widget="handle"/>
+				   				<field name="value" string="Answer Choices"/>
+				   			</tree>
+				   		</field>
+				   	</group>
+				   	
+				   	<group>
+				   		<div class="col-lg-6 offset-lg-3 o_preview_questions">
+				   		
+				   			<!-- Multiple line  -->
+				   			<div attrs="{'invisible':[('type','!=','free_text')]}">
+				   				<i class="fa fa-align-justify fa-4x" role="img"/>
+				   			</div>
+				   		
+				   			<!-- Single line -->
+				   		 	<div attrs="{'invisible': [('type', '!=', 'textbox')]}">
+                            	 <i class="fa fa-minus fa-4x" role="img" aria-label="Single Line" title="Single Line"/>
+                         	</div>
+                         
+                         	<!-- Numerical -->
+				 		 	<div attrs="{'invisible': [('type', '!=', 'numerical_box')]}">
+                            	 <i class="fa fa-2x" role="img" aria-label="Numeric" title="Numeric">123..</i>
+                         	</div>
+                         
+                         	<!-- Date and Time -->
+                         	<div attrs="{'invisible': [('type', '!=', 'date')]}">
+                              <p class="o_datetime">YYYY-MM-DD
+                                   <i class="fa fa-calendar fa-2x" role="img" aria-label="Calendar" title="Calendar"/>
+                              </p>
+                        	 </div>
+				   		
+				   			<!-- Single select -->
+				   			<div attrs="{'invisible':[('type','!=','simple_choice')]}" role="img">
+				   				<div class="row"><i class="fa fa-circle-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-dot-circle-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-circle-o fa-lg"/>answer</div>
+				   			</div>
+				   			
+				   			<!-- Multiple select -->
+				   			<div attrs="{'invisible':[('type','!=','multiple_choice')]}">
+				   				<div class="row"><i class="fa fa-check-square-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-check-square-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-square-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-check-square-o fa-lg"/>answer</div>
+				   				<div class="row"><i class="fa fa-square-o fa-lg"/>answer</div>
+				   			</div>
+				   			
+				   			<!-- matrix -->
+							<div attrs="{'invisible':[('type','!=','matrix')]}">
+								 <div class="row o_matrix_head">
+                                      <div class="col-lg-3"></div>
+                                      <div class="col-lg-3">answer</div>
+                                      <div class="col-lg-3">answer</div>
+                                      <div class="col-lg-3">answer</div>
+                                 </div>
+                                 <div class="row o_matrix_row">
+                                      <div class="col-lg-3">Row1</div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                 </div>
+                                 <div class="row o_matrix_row">
+                                      <div class="col-lg-3">Row2</div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img"/></div>
+                                 </div>
+                                 <div class="row o_matrix_row">
+                                      <div class="col-lg-3">Row3</div>
+                                      <div class="col-lg-3"><i class="fa fa-dot-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                      <div class="col-lg-3"><i class="fa fa-circle-o fa-lg" role="img"/></div>
+                                  </div>
+							</div>				   			
+				   		</div>
+				   	</group>
+				 </group>
+				</div>   		
+				 				   		
+				<div>   		
+				<group string="Is answer mandatory">
+					<field name="constr_mandatory" widget="toggle" class="mandatory_check_class" string="Mandatory Answer" />
+					<field name="constr_error_msg" attrs="{'invisible':[('constr_mandatory','!=',True)]}" class="mandatory_msg_class"/>	<!--  attrs="{'invisible':[('constr_mandatory','!=',True)]}"   -->	
+				</group>
+				</div>
+				
+				<div>
+				<group string="Specify other option" attrs="{'invisible':[('type','not in',['simple_choice','multiple_choice','matrix'])]}">
+					<field name="comments_allowed"/>
+					<field name="comments_message" attrs="{'invisible':[('comments_allowed','!=',True)]}"/>
+					<field name="comment_count_as_answer" attrs="{'invisible':['|',('comments_allowed','!=',True),('type','in',['matrix'])]}" default="This question requires an answer."/>	
+                </group>
+                </div>
+                
+				 <footer>
+				 	<button id="button_click" name="create_question" type="object" string="Save Question" class="oe_highlight button_class"/>            
+				  	<button id="button_update_question" string="Update Question" class="oe_highlight"/> 	<!--   name="update_question" type="object"    --> 
+				 </footer>
+                    </sheet>
+		</form>	
+	</field>	
+	</record>
+	
+	<record model="ir.actions.act_window" id="survey_create_action">
+	<field name="name">survey action</field>
+	<field name="type">ir.actions.act_window</field>
+	<field name="res_model">survey.survey</field>
+	<field name="view_type">form</field>
+	<field name="view_mode">tree,form</field>
+	<field name="help" type="html">
+		<p class="oe_view_noncontent_create">
+			Create Survey
+		</p>
+	</field>
+	</record>
+	
+	<menuitem id="main_menu" string="Survey Create" action="survey_create_action"/>
+</data>
+</odoo>
+
+

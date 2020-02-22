@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+	<template id="template_survey_create" name="Survey Create">
+	<t t-call="survey.layout">
+		<div class="oe_structure">
+			<div class="container">
+			
+			Survey Title : <span> <t t-esc="title"/></span>
+		
+			
+			</div>		
+		<!--  	<t t-foreach="survey">-->
+		</div>
+	</t>
+	</template>
+	
+
+</data>
+</odoo>

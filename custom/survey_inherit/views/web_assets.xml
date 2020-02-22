@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<template id="backend_assets" name="SUrvey_inherit_backend_assets" inherit_id="web.assets_backend"><!--website.assets_editor  -->
+		<xpath expr="." position="inside">
+			 
+			 <script type="text/javascript" src="/survey_inherit/static/src/js/create_record.js"></script> 
+			 <script type="text/javascript" src="/survey_inherit/static/src/js/click_event_update_record.js"></script>	
+			<!-- <script type="text/javascript" src="/survey_inherit/static/src/js/button_click.js"></script>		 
+			  <script type="text/javascript" src="/survey_inherit/static/src/js/checkToggle.js"></script>-->
+		</xpath>
+	</template>
+</odoo>
+
